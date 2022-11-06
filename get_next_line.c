@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 21:46:26 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/06 22:43:53 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/06 23:38:19 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,14 @@ char *get_next_line(int fd)
     {
         readvl = read(fd,buffer,BUFFER_SIZE);
         if (!readvl)
+        {
+            if (!line)
+            {
+                free(buffer);
+                return (NULL);
+            }
             break;
-        buffer[readvl] = '\0';
+        }
         line = ft_strjoin(line,buffer);
     }
     if (ft_strchr(line, '\n'))
@@ -47,30 +53,74 @@ char *get_next_line(int fd)
     free(buffer);
     return (ret);
 }
-#include <fcntl.h>
-int main()
-{
-    int p = open("test",O_CREAT | O_RDWR |  O_RDWR,0777);
-    char *pp;
-    // write(p,"hello",5);
-    pp =get_next_line(p);
-    printf("%s",pp);
-    free(pp);
 
-    pp =get_next_line(p);
-    printf("%s",pp);
-    free(pp);
 
-    pp =get_next_line(p);
-    printf("%s",pp);
-    free(pp);
-    pp =get_next_line(p);
-    printf("%s",pp);
-    free(pp);
-    
-    pp =get_next_line(p);
-    printf("%s",pp);
-    free(pp);
-    system("leaks a.out");
 
-}
+
+
+
+
+
+
+
+
+// #include <fcntl.h>
+// int main()
+// {
+//     int p = open("test",O_CREAT | O_RDWR |  O_RDWR,0777);
+//     char *pp;
+//     // write(p,"hello",5);
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+//         pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     printf("\n\n\n");
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);    
+//     pp =get_next_line(p);
+//     printf("%s",pp);
+//     free(pp);
+//     system("leaks a.out");
+
+// }
