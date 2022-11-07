@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 21:46:26 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/07 17:53:22 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/07 18:45:32 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char *get_next_line(int fd)
                 return(free(buffer),buffer = NULL,free(line),line = NULL,NULL);
             break;
         }
-        free(line);
+        // free(line);
         line = ft_strjoin(line,buffer);
     }
     if (ft_strchr(line, '\n'))
