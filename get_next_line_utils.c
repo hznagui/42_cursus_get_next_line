@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:03:38 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/06 22:43:03 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/07 17:38:50 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*ft_strchr(const char *s, int c)
 	while (i <= o)
 	{
 		if (s[i] == (char)c)
-			return (u + i + 1);
+			return (u + i +1 );
 		i++;
 	}
 	return (0);

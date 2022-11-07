@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 21:46:26 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/06 23:38:19 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/07 17:53:22 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,26 @@ char *get_next_line(int fd)
     while (!ft_strchr(line,'\n'))
     {
         readvl = read(fd,buffer,BUFFER_SIZE);
-        if (!readvl)
+        if (readvl <= 0)
         {
             if (!line)
             {
                 free(buffer);
                 return (NULL);
             }
+            else
+                return(free(buffer),buffer = NULL,free(line),line = NULL,NULL);
             break;
         }
+        free(line);
         line = ft_strjoin(line,buffer);
     }
     if (ft_strchr(line, '\n'))
     {
         ret = ft_substr(line,0,ft_strlen(line) - ft_strlen(ft_strchr(line,'\n')));
-        char *temp =ft_strdup(ft_strchr(line, '\n'));
         free(line);
-        line = temp;
+        line = ft_strdup(ft_strchr(line, '\n'));
+        // line = temp;
     }
     else
     {
@@ -55,15 +58,6 @@ char *get_next_line(int fd)
 }
 
 
-
-
-
-
-
-
-
-
-
 // #include <fcntl.h>
 // int main()
 // {
@@ -73,7 +67,6 @@ char *get_next_line(int fd)
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
-
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
@@ -84,6 +77,8 @@ char *get_next_line(int fd)
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
+
+
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
@@ -121,6 +116,6 @@ char *get_next_line(int fd)
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
-//     system("leaks a.out");
 
+//     system("leaks a.out");
 // }
