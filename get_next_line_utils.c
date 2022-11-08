@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:03:38 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/07 18:50:08 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/08 22:42:55 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	if(s == NULL)
-		return(0);
 	while (s[i])
 		i++;
 	return (i);
@@ -100,7 +98,7 @@ char	*ft_strchr(char *s, int c)
 	while (i <= o)
 	{
 		if (s[i] == (char)c)
-			return (u + i +1 );
+			return (u + i + 1 );
 		i++;
 	}
 	return (0);
@@ -124,4 +122,41 @@ char	*ft_strdup(char *s1)
 	}
 	f[y] = '\0';
 	return (f);
+}
+/*---------------------------5-------------------------------------*/
+size_t	ft_strlcpy(char *dst,char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	u;
+
+	u = 0;
+	i = 0;
+	while (src[i])
+		i++;
+	if (dstsize <= 0)
+		return (i);
+	while (u < i && u < dstsize - 1)
+	{
+		dst[u] = src[u];
+		u++;
+	}
+	dst[u] = '\0';
+	return (i);
+}
+int	new_line(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return (0);
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
