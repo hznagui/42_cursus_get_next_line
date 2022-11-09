@@ -6,31 +6,33 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 20:03:38 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/08 22:42:55 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/09 18:21:13 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen(char *s,char p)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	if (!s)
+		return(0);
+	while (s[i] != p)
 		i++;
 	return (i);
 }
 /*---------------------------1-------------------------------------*/
 static size_t	leakskiller(char *s, unsigned int start, size_t len)
 {
-	if (ft_strlen(s + start) >= len)
+	if (ft_strlen(s + start,'\0') >= len)
 	{
 		return (len);
 	}
 	else
 	{
-		return (ft_strlen(s + start));
+		return (ft_strlen(s + start,'\0'));
 	}
 }
 
@@ -41,7 +43,7 @@ char	*ft_substr(char*s, unsigned int start, size_t len)
 
 	if (!s)
 		return (0);
-	if (ft_strlen(s) < (size_t)start)
+	if (ft_strlen(s,'\0') < (size_t)start)
 		return (ft_strdup(""));
 	p = malloc((leakskiller(s, start, len) + 1) * sizeof(char));
 	if (!p)
@@ -69,7 +71,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = malloc((ft_strlen(s1,'\0') + ft_strlen(s2,'\0') + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	i = -1;
@@ -91,10 +93,10 @@ char	*ft_strchr(char *s, int c)
 	char	*u;
 
 	if (!s)
-		s = "";
-		u = (char *)s;
+		return(NULL);
+	u = (char *)s;
 	i = 0;
-	o = ft_strlen(s);
+	o = ft_strlen(s,'\0');
 	while (i <= o)
 	{
 		if (s[i] == (char)c)
@@ -110,8 +112,10 @@ char	*ft_strdup(char *s1)
 	size_t	y;
 	char	*f;
 
+	if (!s1)
+		return(NULL);
 	y = 0;
-	i = ft_strlen(s1);
+	i = ft_strlen(s1,'\0');
 	f = malloc((i + 1) * sizeof(char));
 	if (!f)
 		return (0);
@@ -124,25 +128,7 @@ char	*ft_strdup(char *s1)
 	return (f);
 }
 /*---------------------------5-------------------------------------*/
-size_t	ft_strlcpy(char *dst,char *src, size_t dstsize)
-{
-	size_t	i;
-	size_t	u;
 
-	u = 0;
-	i = 0;
-	while (src[i])
-		i++;
-	if (dstsize <= 0)
-		return (i);
-	while (u < i && u < dstsize - 1)
-	{
-		dst[u] = src[u];
-		u++;
-	}
-	dst[u] = '\0';
-	return (i);
-}
 int	new_line(char *s, int c)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: hznagui <hznagui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 21:46:26 by hznagui           #+#    #+#             */
-/*   Updated: 2022/11/08 22:44:32 by hznagui          ###   ########.fr       */
+/*   Updated: 2022/11/09 18:23:08 by hznagui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,36 +107,47 @@
 // 	return (line);
 // }
 /*****************************************************************************************/
+static char *reading_line(int fd,char *line)
+{
+    char *buffer;
+    int readvl;
+    
+    buffer = malloc((BUFFER_SIZE + 1) *sizeof(char));
+    if (!buffer)
+        return(0);
+    while (!ft_strchr(line ,'\n'))
+    {
+        readvl = read(fd,buffer,BUFFER_SIZE);
+        if (readvl == -1)
+            return (free(line),free(buffer),NULL);
+        else if (!readvl && !line)
+            return(free(buffer),NULL);
+        else if (!readvl)
+            return (free(buffer),line);
+        buffer[readvl] = '\0';
+        line = ft_strjoin(line,buffer);
+    }
+    return(free(buffer),line);
+}
+
 char *get_next_line(int fd)
 {
     if (fd < 0 | BUFFER_SIZE <= 0)
         return(0);
     static char *line;
-    char *ret =NULL;
-    char *buffer;
-    int readvl=1;
+    char *ret = NULL;
     
-    buffer = malloc((BUFFER_SIZE) *sizeof(char));
-    if (!buffer)
-        return(0);
-    while (!ft_strchr(line ,'\n') && readvl > 0)
-    {
-        readvl = read(fd,buffer,BUFFER_SIZE);
-        line = ft_strjoin(line,buffer);
-    }
-    if(ft_strchr(line ,'\n'))
-    {
-        ret = ft_substr(line ,0,ft_strlen(line) - ft_strlen(ft_strchr(line ,'\n')));
-        ft_strlcpy (line,ft_strchr(line ,'\n'),ft_strlen(ft_strchr(line ,'\n')));
-        printf("[ha lghalat]");
-    }
-    else if (readvl <= 0 && !line)
-        return (free(buffer),NULL);
-    else if(readvl <= 0)
-        return(free(buffer),buffer = NULL,NULL);
-    return (free(buffer),buffer = NULL,ret);
+    line = reading_line(fd,line);
+    if(!line)
+        return(NULL);
+    else if(!line[0])
+        return(NULL);
+    ret = ft_substr(line,0,ft_strlen(line,'\0') - ft_strlen(ft_strchr(line,'\n') ,'\0'));
+    free(line);
+    line = ft_strdup(ft_strchr(line,'\n'));
+    return(ret);
 }
-
+/*****************************************************************************************/
 
 
 // int main()
@@ -149,12 +160,12 @@ char *get_next_line(int fd)
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
-//     printf("\n\n");
+//     // printf("\n\n");
 
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
-//     printf("\n\n");
+//     // printf("\n\n");
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);
@@ -167,11 +178,11 @@ char *get_next_line(int fd)
 //     pp =get_next_line(p);
 //     printf("%s",pp);
 //     free(pp);    
+//     // pp =get_next_line(p);
+//     // printf("%s",pp);
+//     // free(pp);    
 //     // system("leaks a.out");
 // }
-    // pp =get_next_line(p);
-    // printf("%s",pp);
-    // free(pp);    
     // printf("\n\n\n");
     // pp =get_next_line(p);
     // printf("%s",pp);
